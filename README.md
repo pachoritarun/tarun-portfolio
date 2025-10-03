@@ -4,7 +4,7 @@ A modern, responsive portfolio website showcasing my journey as an aspiring Full
 
 ## 🚀 Live Demo
 
-[View Live Portfolio](https://your-portfolio-url.vercel.app)
+[View Live Portfolio](https://tarunpancholi.vercel.app)
 
 ## 🛠️ Built With
 
