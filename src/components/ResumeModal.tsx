@@ -1,8 +1,13 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Download, FileText, X } from 'lucide-react';
+import { Download, FileText, ChevronLeft, ChevronRight } from 'lucide-react';
 import { downloadResume } from './ResumeGenerator';
 import { useState } from 'react';
+import { Document, Page, pdfjs } from 'react-pdf';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import 'react-pdf/dist/Page/TextLayer.css';
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 interface ResumeModalProps {
   isOpen: boolean;
@@ -11,6 +16,8 @@ interface ResumeModalProps {
 
 export const ResumeModal = ({ isOpen, onClose }: ResumeModalProps) => {
   const [showPDFViewer, setShowPDFViewer] = useState(false);
+  const [numPages, setNumPages] = useState<number>(0);
+  const [pageNumber, setPageNumber] = useState<number>(1);
 
   const handlePDFDownload = () => {
     const link = document.createElement('a');
@@ -25,11 +32,16 @@ export const ResumeModal = ({ isOpen, onClose }: ResumeModalProps) => {
     setShowPDFViewer(true);
   };
 
+  const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
+    setNumPages(numPages);
+    setPageNumber(1);
+  };
+
   if (showPDFViewer) {
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-6xl h-[90vh] p-0">
-          <DialogHeader className="px-6 py-4 border-b">
+        <DialogContent className="max-w-5xl h-[90vh] p-0 flex flex-col">
+          <DialogHeader className="px-6 py-4 border-b flex-shrink-0">
             <div className="flex items-center justify-between">
               <DialogTitle className="text-2xl font-bold gradient-text">Tarun Pancholi - Resume</DialogTitle>
               <div className="flex gap-2">
@@ -39,7 +51,7 @@ export const ResumeModal = ({ isOpen, onClose }: ResumeModalProps) => {
                   className="bg-gradient-to-r from-portfolio-neon to-portfolio-electric-purple"
                 >
                   <Download className="h-4 w-4 mr-2" />
-                  Download PDF
+                  Download
                 </Button>
                 <Button
                   onClick={() => setShowPDFViewer(false)}
@@ -51,18 +63,43 @@ export const ResumeModal = ({ isOpen, onClose }: ResumeModalProps) => {
               </div>
             </div>
           </DialogHeader>
-          <div className="flex-1 h-full overflow-auto bg-gray-100 dark:bg-gray-900">
-            <object
-              data="/tarun updated resume.pdf#toolbar=1&navpanes=1&scrollbar=1"
-              type="application/pdf"
-              className="w-full h-full min-h-[600px]"
+          <div className="flex-1 overflow-auto bg-gray-100 dark:bg-gray-900 flex flex-col items-center py-4">
+            <Document
+              file="/tarun updated resume.pdf"
+              onLoadSuccess={onDocumentLoadSuccess}
+              className="flex flex-col items-center"
             >
-              <embed
-                src="/tarun updated resume.pdf#toolbar=1&navpanes=1&scrollbar=1"
-                type="application/pdf"
-                className="w-full h-full min-h-[600px]"
+              <Page
+                pageNumber={pageNumber}
+                renderTextLayer={true}
+                renderAnnotationLayer={true}
+                className="shadow-lg"
+                width={Math.min(window.innerWidth * 0.8, 800)}
               />
-            </object>
+            </Document>
+            {numPages > 1 && (
+              <div className="flex items-center gap-4 mt-4 glass-effect px-4 py-2 rounded-lg">
+                <Button
+                  onClick={() => setPageNumber(Math.max(1, pageNumber - 1))}
+                  disabled={pageNumber <= 1}
+                  size="sm"
+                  variant="outline"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </Button>
+                <span className="text-sm font-medium">
+                  Page {pageNumber} of {numPages}
+                </span>
+                <Button
+                  onClick={() => setPageNumber(Math.min(numPages, pageNumber + 1))}
+                  disabled={pageNumber >= numPages}
+                  size="sm"
+                  variant="outline"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
+            )}
           </div>
         </DialogContent>
       </Dialog>
