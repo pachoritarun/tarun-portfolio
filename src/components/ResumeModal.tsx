@@ -2,6 +2,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/button';
 import { Download, FileText, X } from 'lucide-react';
 import { downloadResume } from './ResumeGenerator';
+import { useState } from 'react';
 
 interface ResumeModalProps {
   isOpen: boolean;
@@ -9,6 +10,8 @@ interface ResumeModalProps {
 }
 
 export const ResumeModal = ({ isOpen, onClose }: ResumeModalProps) => {
+  const [showPDFViewer, setShowPDFViewer] = useState(false);
+
   const handlePDFDownload = () => {
     const link = document.createElement('a');
     link.href = '/tarun updated resume.pdf';
@@ -19,11 +22,49 @@ export const ResumeModal = ({ isOpen, onClose }: ResumeModalProps) => {
   };
 
   const handleViewPDF = () => {
-    window.open('/tarun updated resume.pdf', '_blank');
+    setShowPDFViewer(true);
   };
 
+  if (showPDFViewer) {
+    return (
+      <Dialog open={isOpen} onOpenChange={onClose}>
+        <DialogContent className="max-w-6xl h-[90vh] p-0">
+          <DialogHeader className="px-6 py-4 border-b">
+            <div className="flex items-center justify-between">
+              <DialogTitle className="text-2xl font-bold gradient-text">Tarun Pancholi - Resume</DialogTitle>
+              <div className="flex gap-2">
+                <Button
+                  onClick={handlePDFDownload}
+                  size="sm"
+                  className="bg-gradient-to-r from-portfolio-neon to-portfolio-electric-purple"
+                >
+                  <Download className="h-4 w-4 mr-2" />
+                  Download PDF
+                </Button>
+                <Button
+                  onClick={() => setShowPDFViewer(false)}
+                  variant="outline"
+                  size="sm"
+                >
+                  Back
+                </Button>
+              </div>
+            </div>
+          </DialogHeader>
+          <div className="flex-1 h-full">
+            <iframe
+              src="/tarun updated resume.pdf"
+              className="w-full h-full"
+              title="Tarun Pancholi Resume"
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={() => { onClose(); setShowPDFViewer(false); }}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold gradient-text">Download Resume</DialogTitle>
