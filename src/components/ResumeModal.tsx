@@ -51,12 +51,18 @@ export const ResumeModal = ({ isOpen, onClose }: ResumeModalProps) => {
               </div>
             </div>
           </DialogHeader>
-          <div className="flex-1 h-full">
-            <iframe
-              src="/tarun updated resume.pdf"
-              className="w-full h-full"
-              title="Tarun Pancholi Resume"
-            />
+          <div className="flex-1 h-full overflow-auto bg-gray-100 dark:bg-gray-900">
+            <object
+              data="/tarun updated resume.pdf#toolbar=1&navpanes=1&scrollbar=1"
+              type="application/pdf"
+              className="w-full h-full min-h-[600px]"
+            >
+              <embed
+                src="/tarun updated resume.pdf#toolbar=1&navpanes=1&scrollbar=1"
+                type="application/pdf"
+                className="w-full h-full min-h-[600px]"
+              />
+            </object>
           </div>
         </DialogContent>
       </Dialog>
