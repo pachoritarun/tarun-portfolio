@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Moon, Sun, Menu, X, Download } from 'lucide-react';
-import { downloadResume } from './ResumeGenerator';
+import { ResumeModal } from './ResumeModal';
 
 interface NavigationProps {
   activeSection: string;
@@ -13,6 +13,7 @@ const Navigation = ({ activeSection, setActiveSection }: NavigationProps) => {
   const [isDark, setIsDark] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
 
   const navItems = [
     { id: 'home', label: 'Home' },
@@ -101,7 +102,7 @@ const Navigation = ({ activeSection, setActiveSection }: NavigationProps) => {
             
             <Button
               variant="outline"
-              onClick={downloadResume}
+              onClick={() => setIsResumeModalOpen(true)}
               className="ml-4 bg-gradient-to-r from-portfolio-neon to-portfolio-electric-purple text-white border-0 hover:shadow-lg hover:shadow-portfolio-neon/25"
             >
               <Download className="h-4 w-4 mr-2" />
@@ -160,7 +161,7 @@ const Navigation = ({ activeSection, setActiveSection }: NavigationProps) => {
             ))}
             <Button
               variant="outline"
-              onClick={downloadResume}
+              onClick={() => setIsResumeModalOpen(true)}
               className="w-full justify-start mb-2 bg-gradient-to-r from-portfolio-neon to-portfolio-electric-purple text-white border-0"
             >
               <Download className="h-4 w-4 mr-2" />
@@ -169,6 +170,7 @@ const Navigation = ({ activeSection, setActiveSection }: NavigationProps) => {
           </motion.div>
         )}
       </div>
+      <ResumeModal isOpen={isResumeModalOpen} onClose={() => setIsResumeModalOpen(false)} />
     </motion.nav>
   );
 };
