@@ -80,38 +80,31 @@ const AICodeAssistant = () => {
     setIsLoading(true);
 
     try {
-      const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || 'AIzaSyAm-Yv-xW2S89BdjmVTY4y6EzhCAhEG1eM';
+      const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || 'AIzaSyAKGHAaWZUF-cgZZzc9Cof2CdL1kCUE1_o';
       
-      const contextMessage = messages.length > 0 
-        ? `Previous conversation context:\n${messages.slice(-10).map(m => `${m.isUser ? 'User' : 'Assistant'}: ${m.content}`).join('\n')}\n\nCurrent message: ${userMessage}`
-        : userMessage;
+      const history = messages.slice(-6).map(m => `${m.isUser ? 'User' : 'Bot'}: ${m.content}`).join('\n');
 
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${GEMINI_API_KEY}`, {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{
             parts: [{
-              text: `You are CodeBuddy, a friendly and highly skilled AI coding assistant.
-Your job is to help users write clean, efficient, and well-structured code in any programming language they request.
-You must clearly understand their problem or idea, suggest the best algorithm or structure, and then provide complete code solutions.
-Your personality is warm, helpful, and concise — you're like a coding mentor and friend.
-Always ask clarifying questions if the task is vague.
-Support languages like Python, JavaScript, TypeScript, C++, Java, C#, Go, Rust, HTML/CSS, SQL, Bash, and any others.
-Provide well-commented, optimized code and short explanations for clarity.
-If the user wants improvements, refactor, debug, or optimize existing code, assist them kindly.
-Be available 24/7 as a coding partner for developers of all levels.
+              text: `You are CodeBuddy, a concise coding assistant in a portfolio chat widget.
 
-${contextMessage}`
+STRICT RULES:
+- Only answer coding, DSA, or programming questions. For anything else say: "I only help with coding and tech topics."
+- Max 80 words per reply. If code is needed, max 12 lines + 1 sentence explanation. No exceptions.
+- No intros, no filler, no bullet lists of features. Get straight to the answer.
+- If the question is vague, ask ONE short clarifying question only.
+- Topics: Python, JS, TS, Kotlin, C/C++, Java, React, HTML/CSS, SQL, DSA, algorithms.
+
+${history ? `Chat history:\n${history}\n` : ''}User: ${userMessage}`
             }]
           }],
           generationConfig: {
-            temperature: 0.8,
-            topK: 40,
-            topP: 0.95,
-            maxOutputTokens: 1500,
+            temperature: 0.3,
+            maxOutputTokens: 300,
           },
         })
       });

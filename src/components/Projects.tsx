@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { useTilt } from '@/hooks/useTilt';
 import { 
   CloudRain, 
   BookOpen, 
@@ -14,82 +15,88 @@ import {
   ShoppingCart,
   BarChart3,
   MessageSquare,
-  Bot
+  Bot,
+  Smartphone
 } from 'lucide-react';
 
 // Import project images
-import ecommerceImg from '@/assets/project-ecommerce.jpg';
+import juHelpImg from '@/assets/ju help.png';
 import taskManagerImg from '@/assets/project-taskmanager.jpg';
-import socialImg from '@/assets/project-social.jpg';
+import socialImg from '@/assets/project-social.png';
 import aiChatbotImg from '@/assets/project-ai-chatbot.jpg';
 
 const Projects = () => {
+  const tilt = useTilt(6);
   const projects = [
     {
+      icon: Smartphone,
+      title: "JU Help — Android Education App",
+      description: "Production-grade Android education app for JECRC University students. Architected and shipped end-to-end in 60 days. 200+ active users in 15 days of launch with zero paid marketing.",
+      technologies: ["Kotlin", "Jetpack Compose", "Supabase", "Gemini AI", "Razorpay", "Unity Ads"],
+      status: "Completed",
+      progress: 100,
+      estimatedCompletion: "Launched Apr 2026",
+      features: ["12 AI-powered features", "PYQ Solver & Quiz Generator", "200+ active users", "Razorpay + Unity Ads monetization"],
+      color: "from-green-500 to-emerald-500",
+      image: juHelpImg,
+      isMobileApp: true,
+      demoUrl: "https://juhelp.in",
+      githubUrl: "https://play.google.com/store/apps/details?id=com.juhelp.app"
+    },
+    {
       icon: Bot,
-      title: "Eduverse Career Advisor",
-      description: "AI-powered career guidance platform that provides personalized career recommendations, skill assessments, and educational pathways.",
-      technologies: ["React", "TypeScript", "OpenAI API", "Tailwind"],
+      title: "EduVerseAI — AI Web Platform",
+      description: "AI-powered web platform for document analysis, career guidance, college/company discovery, and DSA coding practice with real-time code execution using Judge0 + Monaco Editor.",
+      technologies: ["React 18", "TypeScript", "Supabase", "Gemini AI", "Judge0 API"],
       status: "Completed", 
       progress: 100,
       estimatedCompletion: "Launched",
-      features: ["AI career guidance", "Skill assessment", "Personalized recommendations", "Educational pathways"],
+      features: ["AI career guidance", "DSA coding practice", "Real-time code execution", "Razorpay subscriptions"],
       color: "from-purple-500 to-pink-500",
       image: taskManagerImg,
+      isMobileApp: false,
       demoUrl: "https://eduverseai.vercel.app",
       githubUrl: "#"
     },
     {
-      icon: ShoppingCart,
-      title: "E-commerce Platform",
-      description: "A modern e-commerce platform with advanced analytics, real-time inventory management, and seamless payment integration.",
-      technologies: ["React", "Node.js", "MongoDB", "Stripe API"],
-      status: "Completed",
-      progress: 100,
-      estimatedCompletion: "Launched",
-      features: ["Real-time analytics", "Payment integration", "Admin dashboard", "Mobile responsive"],
-      color: "from-blue-500 to-cyan-500",
-      image: ecommerceImg,
-      demoUrl: "#",
-      githubUrl: "#"
-    },
-    {
       icon: MessageSquare,
-      title: "Social Media Analytics",
-      description: "Comprehensive social media analytics platform with engagement tracking, sentiment analysis, and automated reporting.",
-      technologies: ["Next.js", "PostgreSQL", "Chart.js", "Python"],
-      status: "Planning",
-      progress: 30,
-      estimatedCompletion: "March 2024",
-      features: ["Engagement tracking", "Sentiment analysis", "Automated reports", "Multi-platform"],
-      color: "from-green-500 to-emerald-500",
+      title: "Cliniq — AI Medical Diagnosis Platform",
+      description: "AI clinical intake system where patients describe symptoms via chat/voice. AI conducts structured follow-up and auto-generates pre-consultation reports. 1st Runner-Up, National Healthcare Hackathon 2026.",
+      technologies: ["AI", "NLP", "Speech-to-Text", "Text-to-Speech", "React"],
+      status: "In Progress",
+      progress: 75,
+      estimatedCompletion: "2026",
+      features: ["Voice symptom intake", "AI differential diagnosis", "Doctor dashboard", "Red-flag alerts"],
+      color: "from-red-500 to-orange-500",
       image: socialImg,
+      isMobileApp: false,
       demoUrl: "#",
       githubUrl: "#"
     },
     {
       icon: MessageSquare,
-      title: "AI-Powered Chatbot",
-      description: "Intelligent conversational AI assistant with natural language processing, context awareness, and advanced learning capabilities.",
-      technologies: ["React", "TypeScript", "OpenAI API", "TensorFlow"],
+      title: "MACRO — Multi-Agent Code Orchestrator",
+      description: "12-stage agentic pipeline with AST-based code graph supporting 7 LLM providers (OpenAI, Anthropic, Gemini, Groq, DeepSeek). Fully offline via Ollama. 420+ unit tests, open-source AGPL v3.",
+      technologies: ["Python", "Agentic AI", "AST", "RAG", "Multi-LLM"],
       status: "Completed",
       progress: 100,
-      estimatedCompletion: "Launched",
-      features: ["Natural language processing", "Context awareness", "Multi-language support", "Voice integration"],
+      estimatedCompletion: "Open Source",
+      features: ["7 LLM providers", "AST code graph", "420+ unit tests", "Fully offline (Ollama)"],
       color: "from-indigo-500 to-purple-600",
       image: aiChatbotImg,
+      isMobileApp: false,
       demoUrl: "#",
       githubUrl: "#"
     }
   ];
 
   const upcomingProjects = [
-    "AI-Powered Blog Generator",
-    "Cryptocurrency Portfolio Tracker", 
-    "Restaurant Management System",
-    "Real Estate Platform",
-    "Learning Management System",
-    "IoT Dashboard"
+    "JU Help v2.0 — 40,000+ Colleges",
+    "AI Resume Builder",
+    "Campus Connect Network",
+    "Smart Study Planner",
+    "Code Review AI",
+    "Startup Dashboard"
   ];
 
   return (
@@ -131,9 +138,22 @@ const Projects = () => {
                 key={index}
                 initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 * index, duration: 0.6 }}
+                transition={{ delay: 0.15 * index, duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
                 viewport={{ once: true }}
                 className="group"
+                style={{ transformStyle: 'preserve-3d' }}
+                onMouseMove={(e) => {
+                  const el = e.currentTarget;
+                  const { left, top, width, height } = el.getBoundingClientRect();
+                  const x = (e.clientX - left) / width - 0.5;
+                  const y = (e.clientY - top) / height - 0.5;
+                  el.style.transform = `perspective(1000px) rotateY(${x * 5}deg) rotateX(${-y * 5}deg)`;
+                  el.style.transition = 'transform 0.1s ease';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg)';
+                  e.currentTarget.style.transition = 'transform 0.6s cubic-bezier(0.23,1,0.32,1)';
+                }}
               >
                 <Card className="overflow-hidden border-portfolio-neon/10 hover:border-portfolio-neon/30 transition-all duration-500 group-hover:shadow-2xl group-hover:shadow-portfolio-neon/20">
                   <div className="md:flex">
@@ -147,7 +167,11 @@ const Projects = () => {
                         <img 
                           src={project.image} 
                           alt={project.title}
-                          className="w-full h-full object-cover"
+                          className={`w-full h-full ${
+                            project.title.includes('JU Help') || project.title.includes('Cliniq')
+                              ? 'object-contain bg-gray-950 p-2'
+                              : 'object-cover'
+                          }`}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                         <div className="absolute top-4 left-4">
@@ -164,7 +188,7 @@ const Projects = () => {
                             disabled={project.demoUrl === '#'}
                           >
                             <ExternalLink className="h-3 w-3 mr-2" />
-                            Demo
+                            {project.title.includes('JU Help') ? 'Website' : 'Demo'}
                           </Button>
                           <Button 
                             size="sm" 
@@ -173,8 +197,8 @@ const Projects = () => {
                             onClick={() => window.open(project.githubUrl, '_blank')}
                             disabled={project.githubUrl === '#'}
                           >
-                            <Github className="h-3 w-3 mr-2" />
-                            Code
+                            {project.title.includes('JU Help') ? <Smartphone className="h-3 w-3 mr-2" /> : <Github className="h-3 w-3 mr-2" />}
+                            {project.title.includes('JU Help') ? 'Play Store' : 'Code'}
                           </Button>
                         </div>
                       </motion.div>

@@ -5,13 +5,24 @@ import { Badge } from '@/components/ui/badge';
 import { 
   Code, 
   Globe, 
-  Shield, 
-  Database, 
   GitBranch, 
   Smartphone,
   Brain,
   Server
 } from 'lucide-react';
+
+const addTilt = (e: React.MouseEvent<HTMLDivElement>) => {
+  const el = e.currentTarget;
+  const { left, top, width, height } = el.getBoundingClientRect();
+  const x = (e.clientX - left) / width - 0.5;
+  const y = (e.clientY - top) / height - 0.5;
+  el.style.transform = `perspective(700px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateZ(6px)`;
+  el.style.transition = 'transform 0.1s ease';
+};
+const removeTilt = (e: React.MouseEvent<HTMLDivElement>) => {
+  e.currentTarget.style.transform = 'perspective(700px) rotateY(0deg) rotateX(0deg) translateZ(0px)';
+  e.currentTarget.style.transition = 'transform 0.5s cubic-bezier(0.23,1,0.32,1)';
+};
 
 const Skills = () => {
   const skillCategories = [
@@ -19,47 +30,47 @@ const Skills = () => {
       icon: Code,
       title: "Programming Languages",
       skills: [
-        { name: "C", level: 85, color: "from-blue-500 to-blue-600" },
-        { name: "C++", level: 80, color: "from-purple-500 to-purple-600" },
-        { name: "Python", level: 70, color: "from-green-500 to-green-600" },
-        { name: "JavaScript", level: 65, color: "from-yellow-500 to-yellow-600" }
+        { name: "Kotlin", level: 90, color: "from-purple-500 to-purple-600" },
+        { name: "JavaScript / TypeScript", level: 80, color: "from-yellow-500 to-yellow-600" },
+        { name: "Python", level: 75, color: "from-green-500 to-green-600" },
+        { name: "C / C++", level: 80, color: "from-blue-500 to-blue-600" }
+      ]
+    },
+    {
+      icon: Smartphone,
+      title: "Mobile Development",
+      skills: [
+        { name: "Jetpack Compose", level: 90, color: "from-green-500 to-emerald-600" },
+        { name: "Android (Material 3)", level: 85, color: "from-teal-500 to-teal-600" },
+        { name: "Supabase (Auth/DB/Storage)", level: 85, color: "from-emerald-500 to-green-600" },
+        { name: "Google Play Console", level: 80, color: "from-cyan-500 to-cyan-600" }
       ]
     },
     {
       icon: Globe,
       title: "Web Development",
       skills: [
-        { name: "HTML5", level: 90, color: "from-orange-500 to-orange-600" },
-        { name: "CSS3", level: 85, color: "from-blue-500 to-blue-600" },
-        { name: "React.js", level: 60, color: "from-cyan-500 to-cyan-600" },
-        { name: "Node.js", level: 55, color: "from-green-500 to-green-600" }
+        { name: "React 18 / Vite", level: 85, color: "from-cyan-500 to-cyan-600" },
+        { name: "HTML5 & CSS3 / Tailwind", level: 90, color: "from-orange-500 to-orange-600" },
+        { name: "TypeScript", level: 80, color: "from-blue-500 to-blue-600" },
+        { name: "Node.js / REST APIs", level: 70, color: "from-green-500 to-green-600" }
       ]
     },
     {
       icon: Brain,
-      title: "Computer Science",
+      title: "AI / ML & Backend",
       skills: [
-        { name: "Data Structures", level: 75, color: "from-indigo-500 to-indigo-600" },
-        { name: "Algorithms", level: 70, color: "from-purple-500 to-purple-600" },
-        { name: "OOP Concepts", level: 80, color: "from-pink-500 to-pink-600" },
-        { name: "Problem Solving", level: 85, color: "from-red-500 to-red-600" }
-      ]
-    },
-    {
-      icon: Shield,
-      title: "Cybersecurity",
-      skills: [
-        { name: "Security Fundamentals", level: 60, color: "from-red-500 to-red-600" },
-        { name: "Network Security", level: 50, color: "from-orange-500 to-orange-600" },
-        { name: "Ethical Hacking", level: 45, color: "from-yellow-500 to-yellow-600" },
-        { name: "Risk Assessment", level: 40, color: "from-green-500 to-green-600" }
+        { name: "Google Gemini API", level: 90, color: "from-indigo-500 to-indigo-600" },
+        { name: "Agentic AI / RAG", level: 75, color: "from-purple-500 to-purple-600" },
+        { name: "PostgreSQL / Supabase RLS", level: 85, color: "from-pink-500 to-pink-600" },
+        { name: "LLM Integration / NLP", level: 80, color: "from-red-500 to-red-600" }
       ]
     }
   ];
 
   const technologies = [
-    "Git", "GitHub", "VS Code", "Linux", "Windows", "Responsive Design",
-    "API Integration", "Database Design", "Version Control", "Agile"
+    "Git", "Gradle", "VS Code", "Figma", "Razorpay", "Unity Ads",
+    "Judge0", "Firebase", "Google Play Console", "Supabase", "Vite", "Framer Motion"
   ];
 
   return (
@@ -103,6 +114,9 @@ const Skills = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 * categoryIndex }}
                 viewport={{ once: true }}
+                onMouseMove={addTilt}
+                onMouseLeave={removeTilt}
+                style={{ transformStyle: 'preserve-3d' }}
               >
                 <Card className="h-full hover:shadow-lg transition-shadow duration-300 border-portfolio-neon/10 hover:border-portfolio-neon/30">
                   <CardHeader className="pb-4">

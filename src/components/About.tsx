@@ -1,28 +1,28 @@
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
-import { GraduationCap, Code, Shield, Lightbulb } from 'lucide-react';
+import { GraduationCap, Code, Smartphone, Lightbulb } from 'lucide-react';
 
 const About = () => {
   const highlights = [
     {
       icon: GraduationCap,
-      title: "Academic Excellence",
-      description: "2nd Year B.Tech CSE at JECRC University, Jaipur"
+      title: "CS Engineering Student",
+      description: "2nd Year B.Tech CSE at JECRC University · CGPA 7.73 · Winner IdeaSpark 2.0"
+    },
+    {
+      icon: Smartphone,
+      title: "Startup Founder",
+      description: "Built JU Help — production Android app, 200+ users in 15 days, zero paid marketing"
     },
     {
       icon: Code,
-      title: "Self-Learning Mindset",
-      description: "Actively mastering Python, DSA, and full-stack development"
-    },
-    {
-      icon: Shield,
-      title: "Cybersecurity Interest",
-      description: "Exploring security fundamentals and ethical hacking"
+      title: "Full-Stack & Android Dev",
+      description: "React 18, TypeScript, Kotlin, Jetpack Compose, Supabase, Gemini AI"
     },
     {
       icon: Lightbulb,
-      title: "Problem Solver",
-      description: "Passionate about creating innovative digital solutions"
+      title: "AI Builder",
+      description: "12 AI features shipped · Agentic AI · RAG · Multi-LLM systems"
     }
   ];
 
@@ -54,7 +54,7 @@ const About = () => {
               viewport={{ once: true }}
               className="text-xl text-muted-foreground max-w-2xl mx-auto"
             >
-              A passionate learner on a journey to become a skilled developer
+              2nd-year CS student, startup founder, and builder of real products
             </motion.p>
           </div>
 
@@ -68,8 +68,21 @@ const About = () => {
               className="space-y-6"
             >
               <div className="relative">
-                <div className="w-80 h-80 mx-auto relative">
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-portfolio-tech-blue to-portfolio-electric-purple p-1">
+                <div className="w-80 h-80 mx-auto relative"
+                  onMouseMove={(e) => {
+                    const el = e.currentTarget;
+                    const { left, top, width, height } = el.getBoundingClientRect();
+                    const x = (e.clientX - left) / width - 0.5;
+                    const y = (e.clientY - top) / height - 0.5;
+                    el.style.transform = `perspective(600px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg)`;
+                    el.style.transition = 'transform 0.1s ease';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'perspective(600px) rotateY(0deg) rotateX(0deg)';
+                    e.currentTarget.style.transition = 'transform 0.6s cubic-bezier(0.23,1,0.32,1)';
+                  }}
+                >
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-portfolio-tech-blue to-portfolio-electric-purple p-1 shadow-[0_20px_60px_-10px_rgba(0,0,0,0.4)]">
                     <img
                       src="/lovable-uploads/photo.png"
                       alt="Tarun Pancholi"
@@ -82,7 +95,7 @@ const About = () => {
               <Card className="glass-effect border-portfolio-neon/20">
                 <CardContent className="p-6">
                   <blockquote className="text-lg italic text-center">
-                    "Driven by curiosity, powered by code — I'm always building."
+                    "Ship fast, learn faster — build things that actually matter."
                   </blockquote>
                   <p className="text-center text-sm text-muted-foreground mt-4">
                     — My Development Philosophy
@@ -101,26 +114,25 @@ const About = () => {
             >
               <div className="prose prose-lg dark:prose-invert">
                 <p className="text-foreground/80 leading-relaxed">
-                  Hello! I'm <span className="gradient-text font-semibold">Tarun Pancholi</span>, 
-                  a self-motivated and passionate Computer Science student currently in my 2nd year 
-                  at JECRC University, Jaipur. My journey in technology is driven by an insatiable 
-                  curiosity to understand how things work and a determination to build solutions 
-                  that make a difference.
+                  Hey! I'm <span className="gradient-text font-semibold">Tarun Pancholi</span>, 
+                  a 2nd-year CS Engineering student at JECRC University, Jaipur — and the founder 
+                  of <span className="text-portfolio-neon font-semibold">JU Help</span>, a production 
+                  Android app I built and shipped in 60 days that hit 200+ active users within 15 days 
+                  of launch with zero paid marketing.
                 </p>
                 
                 <p className="text-foreground/80 leading-relaxed">
-                  I'm actively expanding my skill set in full-stack development, with a strong 
-                  foundation in <span className="text-portfolio-neon">C, C++, HTML, and CSS</span>. 
-                  Currently, I'm diving deep into <span className="text-portfolio-neon">Python 
-                  and Data Structures & Algorithms</span>, while also exploring the fascinating 
-                  world of cybersecurity.
+                  I build across the full stack — <span className="text-portfolio-neon">Android (Kotlin · Jetpack Compose)</span>, 
+                  <span className="text-portfolio-neon"> React 18 · TypeScript</span> for web, and 
+                  <span className="text-portfolio-neon"> Supabase · PostgreSQL</span> on the backend. 
+                  I've shipped 12 AI-powered features using Google Gemini, contributed to a multi-agent 
+                  AI system (MACRO), and co-built Cliniq — 1st Runner-Up at the National Healthcare Hackathon 2026.
                 </p>
 
                 <p className="text-foreground/80 leading-relaxed">
-                  Though I'm early in my professional journey, I believe in learning by doing. 
-                  That's why I offer services like portfolio development, frontend and backend 
-                  design, and app development — each project is a stepping stone in my growth 
-                  as a developer.
+                  I believe in learning by shipping. Every project I take on is production-grade, 
+                  real-world, and built to solve actual problems — from 40,000+ college students 
+                  across India to AI-powered medical diagnosis.
                 </p>
               </div>
 

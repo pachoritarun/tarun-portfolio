@@ -38,9 +38,9 @@ const Services = () => {
     },
     {
       icon: Smartphone,
-      title: "App Development",
-      description: "Develop cross-platform mobile applications with native performance and modern features to reach your audience everywhere.",
-      features: ["Cross-platform", "Native Performance", "Modern UI", "App Store Ready"],
+      title: "Android App Development",
+      description: "Build production-grade Android apps with Jetpack Compose, AI integration, and scalable Supabase backends. Proven with JU Help — 200+ users in 15 days.",
+      features: ["Jetpack Compose", "Supabase Backend", "AI Integration", "Play Store Ready"],
       color: "from-orange-500 to-red-500"
     }
   ];
